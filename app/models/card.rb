@@ -14,7 +14,7 @@
 #  updated_at      :datetime         not null
 #
 
-# create(card_number: "123456789123", security_code: "123", expiration_date: "12/24", card_type: :visa, document_type: :cc, document_number: "123456")
+# create(card_number: "123456789123", security_code: "123", expiration_date: "12/24", card_type: :visa, document_type: :cc, document_number: "123456", donation: donation)
 class Card < ApplicationRecord
   belongs_to :donation
 
@@ -27,7 +27,6 @@ class Card < ApplicationRecord
 
   enum card_type: { visa: 1, mastercard: 2, maestro: 3 }
   enum document_type: { nit: 1, cc: 2 }
-
 
   private
 

@@ -19,15 +19,27 @@
 # er: "1234567", amount: 100000)
 
 class Donation < ApplicationRecord
-  has_one :card, dependent: :destroy
+  has_one :card, dependent: :destroy, inverse_of: :donation
 
   validates :first_name, :last_name, :email, :birth_date, :phone_number, :amount, presence: true
   validates :phone_number, numericality: true
   validates :amount, numericality: { greater_than: 0 }
+  validates :card, presence: true
+  # validates :has_valid_card, on: :create
+
+  accepts_nested_attributes_for :card, reject_if: lambda {|attributes| attributes['kind'].blank?}
 
   scope :ordered, -> { order(id: :desc) }
 
   def donante
     "#{first_name} #{last_name}"
+  end
+
+  private
+
+  def has_valid_card
+    if cards.count != 12
+      errors.add(:card_number, "must have 12 digits")
+    end
   end
 end

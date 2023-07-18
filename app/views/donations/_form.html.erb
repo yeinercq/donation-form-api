@@ -1,14 +1,35 @@
-<%= simple_form_for donation do |f| %>
+<%= simple_form_for donation, class: "mb-4" do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
   <div class="row">
-    <%= f.input :first_name, label: false, placeholder: "Nombre(s)", class: "form-control", input_html: { autofocus: true }, wrapper_html: { class: "col-4" } %>
-    <%= f.input :last_name, label: false, placeholder: "Apellidos", class: "form-control", wrapper_html: { class: "col-4" } %>
-    <%= f.input :email, label: false, placeholder: "Correo electronico: (mail@example.com)", class: "form-control", wrapper_html: { class: "col-4" } %>
+    <%= f.input :first_name, label: "Nombre(s)", placeholder: "Nombre(s)", class: "form-control", input_html: { autofocus: true }, wrapper_html: { class: "col-4" } %>
+    <%= f.input :last_name, label: "Apellidos", placeholder: "Apellidos", class: "form-control", wrapper_html: { class: "col-4" } %>
+    <%= f.input :email, label: "Correo electronico", placeholder: "mail@example.com", class: "form-control", wrapper_html: { class: "col-4" } %>
   </div>
-  <%= f.date_field :birth_date, class: "form-control mb-2" %>
   <div class="row">
-    <%= f.input :phone_number, label: false, placeholder: "Numero de telefono", class: "form-control", wrapper_html: { class: "col-6" } %>
-    <%= f.input :amount, label: false, placeholder: "Cuanto deseas donar?", class: "form-control", wrapper_html: { class: "col-6" } %>
+    <%= f.input :birth_date, as: :date, html5: true, class: "form-control", wrapper_html: { class: "col-4" } %>
+    <%= f.input :phone_number, label: "Numero de telefono", placeholder: "1234567", class: "form-control", wrapper_html: { class: "col-4" } %>
+    <%= f.input :amount, label: "Monto", placeholder: "Cuanto deseas donar?", class: "form-control", wrapper_html: { class: "col-4" } %>
   </div>
+
+  <hr>
+  <div class="d-flex justify-content-center mb-4">
+    <strong>Datos de la tarjeta de credito</strong>
+  </div>
+
+  <%= f.simple_fields_for :card, donation.build_card do |ff| %>
+    <div class="row">
+      <%= ff.input :card_number, label: "Numero de tarjeta", placeholder: "12 digitos", class: "form-cotrol", wrapper_html: { class: "col-6" } %>
+      <%= ff.input :security_code, label: "Codigo de seguridad", placeholder: "3 digitos", class: "form-cotrol", wrapper_html: { class: "col-3" } %>
+      <%= ff.input :expiration_date, label: "Fecha de expiracion", as: :date, class: "form-control", html5: true, wrapper_html: { class: "col-3" } %>
+    </div>
+    <div class="row">
+      <%= ff.input :card_type, as: :select, label: "Tipo de tarjeta", prompt: "Tipo de tarjeta", collection: Card.card_types, class: "form-select", wrapper_html: { class: "col-4" } %>
+      <%= ff.input :document_type, as: :select, label: "Tipo de documento", prompt: "Tipo de documento", collection: Card.document_types, class: "form-select", wrapper_html: { class: "col-4" } %>
+      <%= ff.input :document_number, label: "Numero de documento", placeholder: '1234567', class: "form-control", wrapper_html: { class: "col-4" } %>
+    </div>
+  <% end %>
 
   <%= f.submit class: "btn btn-danger" %>
 <% end %>

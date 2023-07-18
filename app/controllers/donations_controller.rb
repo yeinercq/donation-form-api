@@ -7,6 +7,7 @@ class DonationsController < ApplicationController
 
   def new
     @donation = Donation.new
+    # @donation.build_card
   end
 
   def create
@@ -14,6 +15,7 @@ class DonationsController < ApplicationController
     if @donation.save
       redirect_to root_path, notice: "Donacion exitosamente creada."
     else
+      # debugger
       render :new, status: :unprocessable_entity
     end
   end
@@ -49,7 +51,17 @@ class DonationsController < ApplicationController
       :birth_date,
       :phone_number,
       :amount,
-      options: [:user_agent, :ip_address]
+      options: [:user_agent, :ip_address],
+      card_attributes: [
+        :id,
+        :card_number,
+        :security_code,
+        :expiration_date,
+        :card_type,
+        :document_type,
+        :document_number,
+        :donation_id
+      ]
     )
   end
 end
