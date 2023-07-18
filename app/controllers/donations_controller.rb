@@ -22,9 +22,17 @@ class DonationsController < ApplicationController
   end
 
   def update
+    if @donation.update(donation_params)
+      redirect_to donations_path, notice: "Donacion exitosamente editada."
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
+    if @donation.destroy
+      redirect_to donations_path, notice: "Donacion exitosamente eliminada."
+    end
   end
 
   private
