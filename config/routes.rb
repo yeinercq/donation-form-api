@@ -6,10 +6,13 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "pages#home"
 
+  # GET /api/v1/
   namespace :api do
     namespace :v1 do
       defaults format: :json do
+        # Validates api is ok
         get "donaronline/health", to: "donaronline#health"
+        get "donaronline/index", to: "donaronline#index"
       end
     end
   end
