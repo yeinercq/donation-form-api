@@ -19,6 +19,8 @@
 # er: "1234567", amount: 100000)
 
 class Donation < ApplicationRecord
+  has_one :card, dependent: :destroy
+
   validates :first_name, :last_name, :email, :birth_date, :phone_number, :amount, presence: true
   validates :phone_number, numericality: true
   validates :amount, numericality: { greater_than: 0 }
