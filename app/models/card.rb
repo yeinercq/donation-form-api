@@ -37,7 +37,7 @@ class Card < ApplicationRecord
   end
 
   def correct_security_code_digits_count
-    if card_number.length != 3
+    if security_code.length != 3
       errors.add(:security_code, "must have 3 digits")
     end
   end

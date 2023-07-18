@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_18_163754) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_18_233432) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "plpgsql"
@@ -27,13 +27,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_18_163754) do
   create_table "cards", force: :cascade do |t|
     t.string "card_number", null: false
     t.string "security_code", null: false
-    t.string "expiration_date", null: false
     t.integer "card_type", null: false
     t.integer "document_type", null: false
     t.string "document_number", null: false
     t.bigint "donation_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "expiration_date", null: false
     t.index ["donation_id"], name: "index_cards_on_donation_id"
   end
 

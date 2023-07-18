@@ -27,7 +27,7 @@ class Donation < ApplicationRecord
   validates :card, presence: true
   # validates :has_valid_card, on: :create
 
-  accepts_nested_attributes_for :card, reject_if: lambda {|attributes| attributes['kind'].blank?}
+  accepts_nested_attributes_for :card, reject_if: :all_blank, allow_destroy: true
 
   scope :ordered, -> { order(id: :desc) }
 

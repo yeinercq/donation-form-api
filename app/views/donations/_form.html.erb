@@ -1,4 +1,4 @@
-<%= simple_form_for donation, class: "mb-4" do |f| %>
+<%= simple_form_for donation, data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' }, class: "mb-4" do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
@@ -18,18 +18,21 @@
     <strong>Datos de la tarjeta de credito</strong>
   </div>
 
-  <%= f.simple_fields_for :card, donation.build_card do |ff| %>
-    <div class="row">
-      <%= ff.input :card_number, label: "Numero de tarjeta", placeholder: "12 digitos", class: "form-cotrol", wrapper_html: { class: "col-6" } %>
-      <%= ff.input :security_code, label: "Codigo de seguridad", placeholder: "3 digitos", class: "form-cotrol", wrapper_html: { class: "col-3" } %>
-      <%= ff.input :expiration_date, label: "Fecha de expiracion", as: :date, class: "form-control", html5: true, wrapper_html: { class: "col-3" } %>
-    </div>
-    <div class="row">
-      <%= ff.input :card_type, as: :select, label: "Tipo de tarjeta", prompt: "Tipo de tarjeta", collection: Card.card_types, class: "form-select", wrapper_html: { class: "col-4" } %>
-      <%= ff.input :document_type, as: :select, label: "Tipo de documento", prompt: "Tipo de documento", collection: Card.document_types, class: "form-select", wrapper_html: { class: "col-4" } %>
-      <%= ff.input :document_number, label: "Numero de documento", placeholder: '1234567', class: "form-control", wrapper_html: { class: "col-4" } %>
-    </div>
+  <!-- Nested fields to credit card -->
+  <template data-nested-form-target="template">
+    <%= f.simple_fields_for :card, Card.new, child_index: 'NEW_RECORD' do |card_fields| %>
+      <%= render "card_fields", f: card_fields %>
+    <% end %>
+  </template>
+
+  <%= f.simple_fields_for :card do |card_fields| %>
+    <%= render 'card_fields', f: card_fields %>
   <% end %>
+
+  <!-- Inserted credit card will be injected before that target. -->
+  <div data-nested-form-target="target"></div>
+
+  <button type="button" data-action="nested-form#add">Add todo</button>
 
   <%= f.submit class: "btn btn-danger" %>
 <% end %>

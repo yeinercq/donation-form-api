@@ -54,6 +54,7 @@ class DonationsController < ApplicationController
       options: [:user_agent, :ip_address],
       card_attributes: [
         :id,
+        :_destroy,
         :card_number,
         :security_code,
         :expiration_date,
