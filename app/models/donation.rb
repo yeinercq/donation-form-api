@@ -23,4 +23,9 @@ class Donation < ApplicationRecord
   validates :phone_number, numericality: true
   validates :amount, numericality: { greater_than: 0 }
 
+  scope :ordered, -> { order(id: :desc) }
+
+  def donante
+    "#{first_name} #{last_name}"
+  end
 end

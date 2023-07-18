@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "pages#home"
 
+  resources :donations, except: [:show]
+
   # GET /api/v1/
   namespace :api do
     namespace :v1 do
