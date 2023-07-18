@@ -6,9 +6,16 @@ class DonationsController < ApplicationController
   end
 
   def new
+    @donation = Donation.new
   end
 
   def create
+    @donation = Donation.new(donation_params)
+    if @donation.save
+      redirect_to root_path, notice: "Donacion exitosamente creada."
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
