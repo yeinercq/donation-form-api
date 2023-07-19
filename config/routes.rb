@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get "/campaign", to: "donations#new"
 
   resources :donations, except: [:show]
+  resources :api_tokens, only: [:index, :create, :destroy]
 
   # GET /api/v1/
   namespace :api do

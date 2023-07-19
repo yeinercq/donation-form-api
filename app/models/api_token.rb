@@ -17,6 +17,8 @@ class ApiToken < ApplicationRecord
 
   encrypts :token, deterministic: true
 
+  scope :ordered, -> { order( id: :desc ) }
+
   private
 
   def generate_token
