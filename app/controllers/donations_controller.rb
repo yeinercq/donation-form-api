@@ -11,7 +11,7 @@ class DonationsController < ApplicationController
       @donations =  Donation.filter_by_date(
         Date.parse(params[:start_date]).beginning_of_day,
         Date.parse(params[:end_date]).end_of_day
-      ).ordered
+      ).includes(:card).ordered
     end
   end
 
