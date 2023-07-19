@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "pages#home"
   get "/thanks", to: "pages#thanks"
+  get "/campaign", to: "donations#new"
 
   resources :donations, except: [:show]
 

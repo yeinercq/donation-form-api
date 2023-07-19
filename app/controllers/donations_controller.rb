@@ -1,4 +1,5 @@
 class DonationsController < ApplicationController
+  skip_before_action :authenticate_user!, only: [ :new ] # Skip authentications to create a donation
   before_action :set_donation, only: [:edit, :update, :destroy]
   before_action :set_client_ip, :set_user_agent, only: [:create]
 
@@ -23,7 +24,7 @@ class DonationsController < ApplicationController
     @donation.options[:ip_address] = @client_ip
     @donation.options[:user_agent] = @user_agent
     if @donation.save
-      redirect_to thanks_path, notice: "Donacion exitosamente creada."
+      redirect_to thanks_path
     else
       render :new, status: :unprocessable_entity
     end
