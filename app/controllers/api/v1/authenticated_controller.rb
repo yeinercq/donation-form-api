@@ -1,4 +1,6 @@
 class Api::V1::AuthenticatedController < ActionController::Base
+  rescue_from ActiveRecord::RecordNotFound, with: :handle_not_found # self defined exception
+  protect_from_forgery with: :null_session
   before_action :authenticate
 
   attr_reader :current_api_token, :current_user
@@ -18,6 +20,11 @@ class Api::V1::AuthenticatedController < ActionController::Base
 
   def handle_bad_authentication
     render json: { message: "Bad credentials" }, status: :unauthorized
+  end
+
+  # Handles RecordNotFound exceptions
+  def handle_not_found
+    render json: { message: "Donacion no existe." }, status: :not_found
   end
 
 end
