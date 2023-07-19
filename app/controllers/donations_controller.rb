@@ -54,11 +54,6 @@ class DonationsController < ApplicationController
 
   private
 
-  # A list of the params that can be used for filtering donations index
-  def filtering_params(params)
-    params.slice(:status, :client_id_number, :code)
-  end
-
   def set_user_agent
     @user_agent = request.user_agent
   end

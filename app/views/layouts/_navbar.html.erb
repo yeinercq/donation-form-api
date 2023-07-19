@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">DonarOnline</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <% if user_signed_in? %>
+        <li class="nav-item">
+          <%= link_to_active "Donaciones", donations_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to_active "Tokens", "#", class: "nav-link" %>
+        </li>
+        <% end %>
+      </ul>
+      <% if user_signed_in? %>
+        <div class="text-dark me-2">
+          <strong>
+            <%= current_user.email %>
+          </strong>
+        </div>
+        <%= button_to "Salir", destroy_user_session_path, method: :delete, data: { turbo_confirm: "Quiere cerrar sesion?" }, class: "btn btn-outline-dark" %>
+      <% else %>
+        <%= button_to "Ingresar", new_user_session_path, method: :get, class: "btn btn-dark" %>
+      <% end %>
+    </div>
+  </div>
+</nav>
