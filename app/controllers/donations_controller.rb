@@ -15,7 +15,7 @@ class DonationsController < ApplicationController
     @donation.options[:ip_address] = @client_ip
     @donation.options[:user_agent] = @user_agent
     if @donation.save
-      redirect_to root_path, notice: "Donacion exitosamente creada."
+      redirect_to thanks_path, notice: "Donacion exitosamente creada."
     else
       render :new, status: :unprocessable_entity
     end
