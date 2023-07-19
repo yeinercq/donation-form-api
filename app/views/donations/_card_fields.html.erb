@@ -10,7 +10,10 @@
     <%= f.input :document_number, label: "Numero de documento", placeholder: '1234567', class: "form-control", wrapper_html: { class: "col-4" } %>
   </div>
 
-  <button type="button" data-action="nested-form#remove" class="btn btn-success mb-2">Remover </button>
+  <!-- if action name is edit does not  show remove button -->
+  <% if action_name == "new" %>
+    <button type="button" data-action="nested-form#remove" class="btn btn-success mb-2">Remover </button>
+  <% end %>
 
   <%= f.hidden_field :_destroy %>
 </div>
