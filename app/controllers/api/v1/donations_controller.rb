@@ -7,7 +7,7 @@ class Api::V1::DonationsController < Api::V1::AuthenticatedController
     # curl -X GET "localhost:3000/api/v1/donations" -H "Authorization: Bearer TOKEN"
     @donations = Donation.where(nil).ordered
     # Else show donations between start_date and end_date
-    # curl -X GET "localhost:3000/api/v1/donations?start_date=2023-07-19&end_date=2023-07-19" -H "Authorization: Bearer TOKEN"
+    # curl -X GET "localhost:3000/api/v1/donations?start_date=AAAA-MM-DD&end_date=AAAA-MM-DD" -H "Authorization: Bearer TOKEN"
     if params[:start_date].present? and params[:end_date].present?
       @donations =  Donation.filter_by_date(
         Date.parse(params[:start_date]).beginning_of_day,

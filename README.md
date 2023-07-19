@@ -1,24 +1,25 @@
-# README
+# API EXAMPLES
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Index
 
-Things you may want to cover:
+### With no date limits
+curl -X GET "localhost:3000/api/v1/donations" -H "Authorization: Bearer TOKEN"
 
-* Ruby version
+### With no date limits
+curl -X GET "localhost:3000/api/v1/donations?start_date=AAAA-MM-DD&end_date=AAAA-MM-DD" -H "Authorization: Bearer TOKEN"
 
-* System dependencies
+## Show
 
-* Configuration
+curl -X GET "localhost:3000/api/v1/donations/:id" -H "Authorization: Bearer TOKEN"
 
-* Database creation
+## Create
 
-* Database initialization
+curl -X POST "localhost:3000/api/v1/donations" -H 'Content-Type: application/json' -H "Authorization: Bearer TOKEN" -d '{ "donation":{"first_name":"Test", "last_name":"Test", "email":"mail@test.com", "birth_date":"2023-07-03", "phone_number":"123456", "amount":"100000", "card_attributes":{"card_number":"123456789012", "security_code":"123", "expiration_date":"2023-07-28", "card_type":"visa", "document_type":"cc", "document_number":"7654321", "_destroy":"false"}} }'
 
-* How to run the test suite
+## Update
 
-* Services (job queues, cache servers, search engines, etc.)
+curl -X PATCH "localhost:3000/api/v1/donations/:id" -H 'Content-Type: application/json' -H "Authorization: Bearer TOKEN" -d '{ "donation":{"first_name":"Test 2","last_name":"Test 2","email":"mail@test2.com","birth_date":"2023-07-03","phone_number":"12345678","amount":"50000.0","card_attributes":{"id":id,"card_number":"123456789012","security_code":"123","card_type":"mastercard","document_type":"cc","document_number":"9876543","donation_id":id,"expiration_date":"2023-07-21"}} }'
 
-* Deployment instructions
+## Destroy
 
-* ...
+curl -X DELETE http://localhost:3000/api/v1/donations/:id -H "Authorization: Bearer TOKEN"
