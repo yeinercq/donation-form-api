@@ -31,7 +31,9 @@ class Donation < ApplicationRecord
 
   scope :ordered, -> { order(id: :desc) }
 
-  def donante
+  broadcasts_to ->(donation) { "donations" }, inserts_by: :prepend
+
+  def donor
     "#{first_name} #{last_name}"
   end
 

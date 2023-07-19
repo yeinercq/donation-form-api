@@ -1,3 +1,4 @@
+<%= turbo_stream_from "donations" %>
 <div class="container-fluid">
   <div class="header mt-4">
     <h1>Donaciones</h1>
@@ -13,5 +14,7 @@
     <div class="col-1">ACCIONES</div>
   </div>
 
-  <%= render @donations %>
+  <%= turbo_frame_tag "donations" do %>
+    <%= render @donations %>
+  <% end %>
 </div>

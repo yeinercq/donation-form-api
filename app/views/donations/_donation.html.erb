@@ -1,6 +1,6 @@
 <div class="d-flex border rounded mb-2 p-2 shadow align-items-center">
   <div class="col"><%= l(donation.created_at, format: :short) %></div>
-  <div class="col"><%= donation.donante %></div>
+  <div class="col"><%= donation.donor %></div>
   <div class="col"><%= donation.email %></div>
   <div class="col"><%= donation.phone_number %></div>
   <div class="col"><%= number_to_currency( donation.amount, unit: "$", format: "%u %n") %></div>
