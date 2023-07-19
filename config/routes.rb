@@ -18,7 +18,7 @@ Rails.application.routes.draw do
         # Validates api is ok
         get "donaronline/health", to: "donaronline#health"
         get "donaronline/who_i_am", to: "donaronline#who_i_am"
-        resources :donations, except: [:new, :edit, :create]
+        resources :donations, except: [:new, :edit]
       end
     end
   end

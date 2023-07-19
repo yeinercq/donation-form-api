@@ -20,7 +20,21 @@ class Api::V1::DonationsController < Api::V1::AuthenticatedController
   def show
   end
 
-  # curl -X PATCH "localhost:3000/api/v1/donations/23" -H 'Content-Type: application/json' -H "Authorization: Bearer dbd3d39754e53bacfe7f1804e7280a04" -d '{ "donation":{"first_name":"Andrea Maria","last_name":"Roa","email":"andrea@roa.com","birth_date":"2023-07-03","phone_number":"12345678","options":{"ip_address":"127.0.0.1","user_agent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0"},"status":null,"amount":"50000.0","card_attributes":{"id":16,"card_number":"","security_code":"123","card_type":"mastercard","document_type":"cc","document_number":"9876543","donation_id":23,"expiration_date":"2023-07-21"}} }'
+  # curl -X POST "localhost:3000/api/v1/donations" -H 'Content-Type: application/json' -H "Authorization: Bearer TOKEN" -d '{ "donation":{"first_name":"Test", "last_name":"Test", "email":"mail@test.com", "birth_date":"2023-07-03", "phone_number":"123456", "amount":"100000", "card_attributes":{"card_number":"123456789012", "security_code":"123", "expiration_date":"2023-07-28", "card_type":"visa", "document_type":"cc", "document_number":"7654321", "_destroy":"false"}} }'
+  def create
+    @donation = Donation.new(donation_params)
+    @donation.options[:ip_address] = @client_ip
+    @donation.options[:user_agent] = @user_agent
+    if @donation.save
+      render @donation, status: :created
+      # Send message to donor email
+      DonorMailer.with(donation: @donation).donation_email.deliver_later
+    else
+      render @donation.errors, status: :unprocessable_entity
+    end
+  end
+
+  # curl -X PATCH "localhost:3000/api/v1/donations/:id" -H 'Content-Type: application/json' -H "Authorization: Bearer TOKEN" -d '{ "donation":{"first_name":"Andrea Maria","last_name":"Roa","email":"andrea@roa.com","birth_date":"2023-07-03","phone_number":"12345678","options":{"ip_address":"127.0.0.1","user_agent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0"},"status":null,"amount":"50000.0","card_attributes":{"id":16,"card_number":"","security_code":"123","card_type":"mastercard","document_type":"cc","document_number":"9876543","donation_id":23,"expiration_date":"2023-07-21"}} }'
   def update
     if @donation.update(donation_params)
       render json: { message: "Donacion exitosamente editada." }, status: :ok
@@ -29,7 +43,7 @@ class Api::V1::DonationsController < Api::V1::AuthenticatedController
     end
   end
 
-  # curl -X DELETE http://localhost:3000/api/v1/donations/23 -H "Authorization: Bearer dbd3d39754e53bacfe7f1804e7280a04"
+  # curl -X DELETE http://localhost:3000/api/v1/donations/:id -H "Authorization: Bearer TOKEN"
   def destroy
     if @donation.destroy
       render json: { message: "Donacion exitosamente eliminada." }, status: :ok
