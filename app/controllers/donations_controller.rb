@@ -21,6 +21,7 @@ class DonationsController < ApplicationController
 
   def create
     @donation = Donation.new(donation_params)
+    # Set ip_address and user_agent options to donation
     @donation.options[:ip_address] = @client_ip
     @donation.options[:user_agent] = @user_agent
     if @donation.save

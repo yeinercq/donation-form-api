@@ -23,6 +23,7 @@ class Api::V1::DonationsController < Api::V1::AuthenticatedController
   # curl -X POST "localhost:3000/api/v1/donations" -H 'Content-Type: application/json' -H "Authorization: Bearer TOKEN" -d '{ "donation":{"first_name":"Test", "last_name":"Test", "email":"mail@test.com", "birth_date":"2023-07-03", "phone_number":"123456", "amount":"100000", "card_attributes":{"card_number":"123456789012", "security_code":"123", "expiration_date":"2023-07-28", "card_type":"visa", "document_type":"cc", "document_number":"7654321", "_destroy":"false"}} }'
   def create
     @donation = Donation.new(donation_params)
+    # Set ip_address and user_agent options to donation
     @donation.options[:ip_address] = @client_ip
     @donation.options[:user_agent] = @user_agent
     if @donation.save

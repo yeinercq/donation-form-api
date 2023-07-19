@@ -3,6 +3,7 @@ class Api::V1::AuthenticatedController < ActionController::Base
   protect_from_forgery with: :null_session
   before_action :authenticate
 
+  # Variables accessor
   attr_reader :current_api_token, :current_user
 
   def authenticate
