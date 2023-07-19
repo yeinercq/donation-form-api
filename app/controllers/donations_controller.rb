@@ -24,7 +24,10 @@ class DonationsController < ApplicationController
     @donation.options[:ip_address] = @client_ip
     @donation.options[:user_agent] = @user_agent
     if @donation.save
+      # Redirect to thanks page
       redirect_to thanks_path
+      # Send message to donor email
+      DonorMailer.with(donation: @donation).donation_email.deliver_later
     else
       render :new, status: :unprocessable_entity
     end
