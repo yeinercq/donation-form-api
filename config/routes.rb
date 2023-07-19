@@ -17,7 +17,8 @@ Rails.application.routes.draw do
       defaults format: :json do
         # Validates api is ok
         get "donaronline/health", to: "donaronline#health"
-        get "donaronline/index", to: "donaronline#index"
+        get "donaronline/who_i_am", to: "donaronline#who_i_am"
+        resources :donations, except: [:new, :create, :show]
       end
     end
   end
