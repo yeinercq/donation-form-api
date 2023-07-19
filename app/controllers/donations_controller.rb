@@ -3,7 +3,15 @@ class DonationsController < ApplicationController
   before_action :set_client_ip, :set_user_agent, only: [:create]
 
   def index
-    @donations = Donation.ordered
+    # If there is not filter date params show donations
+    @donations = Donation.where(nil).ordered
+    # Else show donations between start_date and end_date
+    if params[:start_date].present? and params[:end_date].present?
+      @donations =  Donation.filter_by_date(
+        Date.parse(params[:start_date]).beginning_of_day,
+        Date.parse(params[:end_date]).end_of_day
+      ).ordered
+    end
   end
 
   def new
@@ -45,6 +53,11 @@ class DonationsController < ApplicationController
   end
 
   private
+
+  # A list of the params that can be used for filtering donations index
+  def filtering_params(params)
+    params.slice(:status, :client_id_number, :code)
+  end
 
   def set_user_agent
     @user_agent = request.user_agent

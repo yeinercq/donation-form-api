@@ -1,7 +1,22 @@
 <%= turbo_stream_from "donations" %>
 <div class="container-fluid">
-  <div class="header mt-4">
+  <div class="d-flex justify-content-between align-items-center mt-4">
     <h1>Donaciones</h1>
+    <!-- Form to search donations between start_date and end_date -->
+    <div class="d-flex">
+      <%= form_with( url: donations_path, method: :get, data: {turbo_frame: 'donations'}, class: "d-block d-md-flex flex-row gap-2 align-items-center" ) do |form| %>
+        Filtrar:
+        <div class="col-auto mb-2">
+          <%= form.date_field :start_date, class: "form-control" %>
+        </div>
+        <div class="col-auto mb-2">
+          <%= form.date_field :end_date, class: "form-control" %>
+        </div>
+        <div class="col-auto mb-2">
+          <%= form.submit "Buscar", class: "btn btn-warning" %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
   <div class="d-flex border rounded bg-success mb-2 px-2">

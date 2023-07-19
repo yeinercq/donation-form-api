@@ -29,7 +29,9 @@ class Donation < ApplicationRecord
 
   accepts_nested_attributes_for :card, reject_if: :all_blank, allow_destroy: true
 
+  # Query filters
   scope :ordered, -> { order(id: :desc) }
+  scope :filter_by_date, ->(start_date, end_date) { where("donations.created_at >= ? AND donations.created_at <= ?", start_date, end_date) }
 
   # On CRUD actions updates donation index
   broadcasts_to ->(donation) { "donations" }, inserts_by: :prepend
