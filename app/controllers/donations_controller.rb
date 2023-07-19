@@ -1,5 +1,6 @@
 class DonationsController < ApplicationController
   before_action :set_donation, only: [:edit, :update, :destroy]
+  before_action :set_client_ip, :set_user_agent, only: [:create]
 
   def index
     @donations = Donation.ordered
@@ -7,11 +8,12 @@ class DonationsController < ApplicationController
 
   def new
     @donation = Donation.new
-    # @donation.build_card
   end
 
   def create
     @donation = Donation.new(donation_params)
+    @donation.options[:ip_address] = @client_ip
+    @donation.options[:user_agent] = @user_agent
     if @donation.save
       redirect_to root_path, notice: "Donacion exitosamente creada."
     else
@@ -39,6 +41,14 @@ class DonationsController < ApplicationController
 
   private
 
+  def set_user_agent
+    @user_agent = request.user_agent
+  end
+
+  def set_client_ip
+    @client_ip = request.ip
+  end
+
   def set_donation
     @donation = Donation.find(params[:id])
   end
@@ -51,7 +61,6 @@ class DonationsController < ApplicationController
       :birth_date,
       :phone_number,
       :amount,
-      options: [:user_agent, :ip_address],
       card_attributes: [
         :id,
         :_destroy,
