@@ -5,7 +5,7 @@
 ### With no date limits
 curl -X GET "localhost:3000/api/v1/donations" -H "Authorization: Bearer TOKEN"
 
-### With no date limits
+### With date limits
 curl -X GET "localhost:3000/api/v1/donations?start_date=AAAA-MM-DD&end_date=AAAA-MM-DD" -H "Authorization: Bearer TOKEN"
 
 ## Show
