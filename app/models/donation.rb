@@ -31,6 +31,7 @@ class Donation < ApplicationRecord
 
   scope :ordered, -> { order(id: :desc) }
 
+  # On CRUD actions updates donation index
   broadcasts_to ->(donation) { "donations" }, inserts_by: :prepend
 
   def donor

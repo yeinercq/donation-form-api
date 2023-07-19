@@ -6,5 +6,9 @@
     <h1>Editar donacion</h1>
   </div>
 
-  <%= render 'form', donation: @donation %>
+  <%= turbo_frame_tag "remote_modal" do %>
+    <%= render "layouts/modal_content", title: "Editar donacion" do %>
+      <%= render 'form', donation: @donation %>
+    <% end %>
+  <% end %>
 </div>

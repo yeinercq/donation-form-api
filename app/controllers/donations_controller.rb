@@ -17,7 +17,6 @@ class DonationsController < ApplicationController
     if @donation.save
       redirect_to root_path, notice: "Donacion exitosamente creada."
     else
-      # debugger
       render :new, status: :unprocessable_entity
     end
   end
@@ -27,7 +26,10 @@ class DonationsController < ApplicationController
 
   def update
     if @donation.update(donation_params)
-      redirect_to donations_path, notice: "Donacion exitosamente editada."
+      respond_to do |format|
+        format.html { redirect_to donations_path, notice: "Donacion exitosamente editada." }
+        format.turbo_stream { flash.now[:notice] = "Donacion exitosamente editada." }
+      end
     else
       render :edit, status: :unprocessable_entity
     end
@@ -35,7 +37,10 @@ class DonationsController < ApplicationController
 
   def destroy
     if @donation.destroy
-      redirect_to donations_path, notice: "Donacion exitosamente eliminada."
+      respond_to do |format|
+        format.html { redirect_to donations_path, notice: "Donacion exitosamente eliminada." }
+        format.turbo_stream { flash.now[:notice] = "Donacion exitosamente eliminada." }
+      end
     end
   end
 
