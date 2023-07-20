@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   get "/thanks", to: "pages#thanks"
   get "/campaign", to: "donations#new"
 
-  resources :donations, except: [:show]
+  resources :donations, except: [:show] do
+    patch :trigger, on: :member
+  end
   resources :api_tokens, only: [:index, :create, :destroy]
 
   # GET /api/v1/

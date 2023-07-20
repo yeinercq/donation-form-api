@@ -6,6 +6,15 @@
     <div class="col"><%= donation.phone_number %></div>
     <div class="col"><%= number_to_currency( donation.amount, unit: "$", format: "%u %n") %></div>
     <div class="col"><%= donation.status %></div>
+    <div class="col d-flex gap-2">
+
+    <!-- This shows available trigger buttons for every acccount -->
+    <% if donation.recibida? or donation.aprobada? %>
+      <% available_events_for(donation).each do |event| %>
+        <%= button_to "#{event}", trigger_donation_path(donation, event: event), method: :patch, data: { turbo_confirm: "Esta seguro?" }, class: "btn btn-success" %>
+      <% end %>
+    <% end %>
+    </div>
 
     <!-- Actions -->
     <div class="col-1 d-flex justify-content-end gap-2">
