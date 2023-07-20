@@ -19,6 +19,8 @@
 # er: "1234567", amount: 100000)
 
 class Donation < ApplicationRecord
+  include AASM
+
   has_one :card, dependent: :destroy, inverse_of: :donation
 
   validates :first_name, :last_name, :email, :birth_date, :phone_number, :amount, presence: true
@@ -39,6 +41,25 @@ class Donation < ApplicationRecord
   def donor
     "#{first_name} #{last_name}"
   end
+
+  # State machine to manage donation status
+  aasm column: :status do
+    state :recibida, initial: true
+    state :aprobada, :rechazada, :cobrada
+
+    event :aprobar do
+      transitions from: [:recibida, :rechazada], to: :aprobada
+    end
+
+    event :rechazar do
+      transitions from: :recibida, to: :rechazada
+    end
+
+    event :cobrar do
+      transitions from: :aprobada, to: :cobrada
+    end
+  end
+
 
   private
 
