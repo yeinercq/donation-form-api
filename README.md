@@ -1,3 +1,15 @@
+# NOTAS DE USO
+
+Luego de correr el servidor, puede crear un nuevo usuario dar en el boton "Ingresar", o ingresando a la url http://localhost:3000/users/sign_in
+
+En la url http://localhost:3000/campaign se puede crear una nueva donacion publicamente
+
+En la url http://localhost:3000/donations se pueden gestionar las donaciones
+
+En la url http://localhost:3000/api_tokens se pueden generar los TOKENs para el uso de la api
+
+## Imporante tener instalado REDIS y correr un servidor con el comando 'redis-server' para el uso de la web app
+
 # API EXAMPLES
 
 ## Index
