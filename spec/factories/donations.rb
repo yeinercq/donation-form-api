@@ -21,7 +21,10 @@ FactoryBot.define do
     sequence(:email) { |n| "person#{n}@example.com" }
     birth_date { "1990-03-04" }
     phone_number { "1234578" }
-    options {  }
     amount { 100000 }
+
+    factory :donation_with_card do
+      card { [association(:card)] }
+    end
   end
 end

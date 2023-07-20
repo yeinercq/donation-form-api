@@ -19,9 +19,7 @@ class Card < ApplicationRecord
   belongs_to :donation
 
   validates :card_number, :security_code, :expiration_date, :card_type, :document_type, :document_number, presence: true
-  validates :card_number, numericality: { greater_than: 0 } # TODO: Validates max numbers
-  validates :security_code, numericality: { greater_than: 0 }
-  validates :document_number, numericality: { greater_than: 0 }
+  validates :card_number, :security_code, :document_number, numericality: { greater_than: 0 } # TODO: Validates max numbers
   validate :correct_card_number_digits_count
   validate :correct_security_code_digits_count
 
