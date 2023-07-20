@@ -1,5 +1,5 @@
 class DonationsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [ :new ] # Skip authentications to create a donation
+  skip_before_action :authenticate_user!, only: [ :new, :create ] # Skip authentications to create a donation
   before_action :set_donation, only: [:edit, :update, :destroy, :trigger]
   before_action :set_client_ip, :set_user_agent, only: [:create]
 
