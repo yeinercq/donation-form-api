@@ -2,7 +2,7 @@ class Api::V1::DonaronlineController < Api::V1::AuthenticatedController
 
   # curl -X GET "localhost:3000/api/v1/donaronline/health" -H "Authorization: Bearer TOKEN"
   def health
-    render json: { message: "API is Ok!" }
+    render json: { message: "API is Ok!" }, status: :ok
   end
 
   # curl -X GET "localhost:3000/api/v1/donaronline/who_i_am" -H "Authorization: Bearer TOKEN"
