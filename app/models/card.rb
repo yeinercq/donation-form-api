@@ -5,13 +5,13 @@
 #  id              :bigint           not null, primary key
 #  card_number     :string           not null
 #  security_code   :string           not null
-#  expiration_date :string           not null
 #  card_type       :integer          not null
 #  document_type   :integer          not null
 #  document_number :string           not null
 #  donation_id     :bigint           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  expiration_date :date             not null
 #
 
 # create(card_number: "123456789123", security_code: "123", expiration_date: "12/24", card_type: :visa, document_type: :cc, document_number: "123456", donation: donation)
